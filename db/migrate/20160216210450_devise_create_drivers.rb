@@ -34,6 +34,7 @@ class DeviseCreateDrivers < ActiveRecord::Migration
       
       t.string  :otp_secret_key
       t.integer :otp_counter
+      t.string  :authentication_token
 
 
       t.timestamps null: false

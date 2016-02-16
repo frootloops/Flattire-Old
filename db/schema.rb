@@ -17,14 +17,15 @@ ActiveRecord::Schema.define(version: 20160216210450) do
   enable_extension "plpgsql"
 
   create_table "drivers", force: :cascade do |t|
-    t.string   "email",              default: "", null: false
-    t.string   "name",               default: "", null: false
-    t.string   "phone",              default: "", null: false
-    t.string   "encrypted_password", default: "", null: false
+    t.string   "email",                default: "", null: false
+    t.string   "name",                 default: "", null: false
+    t.string   "phone",                default: "", null: false
+    t.string   "encrypted_password",   default: "", null: false
     t.string   "otp_secret_key"
     t.integer  "otp_counter"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.string   "authentication_token"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "drivers", ["phone"], name: "index_drivers_on_phone", unique: true, using: :btree
