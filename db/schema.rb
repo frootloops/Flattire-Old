@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20160216210450) do
     t.string   "name",               default: "", null: false
     t.string   "phone",              default: "", null: false
     t.string   "encrypted_password", default: "", null: false
+    t.string   "otp_secret_key"
+    t.integer  "otp_counter"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end
