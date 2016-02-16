@@ -25,6 +25,7 @@ gem "active_model_otp"
 gem "phonelib"
 gem "twilio-ruby"
 gem "sidekiq"
+gem "simple_token_authentication"
 
 group :development do
   gem "quiet_assets"
