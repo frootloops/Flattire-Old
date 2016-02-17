@@ -1,6 +1,4 @@
- def access_token
- +    object.authentication_token
- +  endsource "https://rubygems.org"
+ source "https://rubygems.org"
 
 ruby "2.3.0"
 
