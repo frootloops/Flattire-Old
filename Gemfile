@@ -1,4 +1,6 @@
-source "https://rubygems.org"
+ def access_token
+ +    object.authentication_token
+ +  endsource "https://rubygems.org"
 
 ruby "2.3.0"
 
@@ -34,6 +36,7 @@ group :development do
   gem "spring"
   gem "spring-commands-rspec"
   gem "web-console"
+  gem "foreman"
 end
 
 group :development, :test do
