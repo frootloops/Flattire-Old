@@ -27,32 +27,35 @@ describe Api::V1::AuthController, type: :request do
     end
   end
 
-#   describe "POST #bonjour" do
-#     context "with new credential" do
-#       it "creates a traveler" do
-#         headers = { "X-Traveler-Device": "UUID" }
-#         post '/api/v1/bonjour', {}, headers
-#         expect(response).to have_http_status(:created)
-#         expect(Traveler.find_by(device_token: "UUID")).to be_kind_of(Traveler)
-#       end
-#     end
-#
-#     context "with an existing traveler" do
-#       it "regenerates a token" do
-#         traveler = create(:traveler)
-#         headers = { "X-Traveler-Device": traveler.device_token,
-#                     "X-Traveler-Token": "INVALID TOKEN" }
-#         expect do
-#           post '/api/v1/bonjour', {}, headers
-#           traveler.reload
-#         end.to change(traveler, :authentication_token)
-#         expect(response).to be_success
-#
-#         headers = { "X-Traveler-Device": traveler.device_token,
-#                     "X-Traveler-Token": traveler.authentication_token }
-#         get '/api/v1/bonjour/check', {}, headers
-#         expect(response).to be_success
-#       end
-#     end
-#   end
+  describe "POST #sign_in" do
+    it "returns a token" do
+      driver = create :driver
+      post '/api/v1/auth/sign_in', { phone: driver.phone, code: driver.otp_code }
+      expect(response).to be_success
+      token = JSON.parse(response.body)["driver"]["access_token"]
+      expect(token).to eql(driver.reload.authentication_token)
+    end
+
+    it "returns 401 error" do
+      driver = create :driver
+      post '/api/v1/auth/sign_in', { phone: driver.phone, code: "WRONG" }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
+
+  describe "POST #log_out" do
+    it "changes an authentication_token" do
+      driver = create :driver
+      post '/api/v1/auth/log_out', {}, { "X-Driver-Token": driver.authentication_token }
+      expect {
+        driver.reload
+      }.to change(driver, :authentication_token)
+
+    end
+
+    it "returns 401" do
+      post '/api/v1/auth/log_out', {}, { "X-Driver-Token": "" }
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end
