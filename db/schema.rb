@@ -11,10 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216210450) do
+ActiveRecord::Schema.define(version: 20160221183346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
+  enable_extension "cube"
+  enable_extension "earthdistance"
 
   create_table "drivers", force: :cascade do |t|
     t.string   "email",                default: "", null: false
@@ -26,9 +29,18 @@ ActiveRecord::Schema.define(version: 20160216210450) do
     t.string   "authentication_token", default: "", null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "drivers", ["authentication_token"], name: "index_drivers_on_authentication_token", unique: true, using: :btree
   add_index "drivers", ["phone"], name: "index_drivers_on_phone", unique: true, using: :btree
+
+  create_table "spatial_ref_sys", primary_key: "srid", force: :cascade do |t|
+    t.string  "auth_name", limit: 256
+    t.integer "auth_srid"
+    t.string  "srtext",    limit: 2048
+    t.string  "proj4text", limit: 2048
+  end
 
 end
