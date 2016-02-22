@@ -128,7 +128,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (2.99)
+    mime-types (2.99.1)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
@@ -311,7 +311,7 @@ DEPENDENCIES
   quiet_assets
   rack-canonical-host
   rack-timeout
-  rails (~> 4.2.0)
+  rails
   recipient_interceptor
   refills
   rspec-rails (~> 3.4.0)
